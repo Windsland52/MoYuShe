@@ -1,3 +1,4 @@
+import init
 import show
 import sign
 
@@ -7,4 +8,5 @@ def MoYuShe():
     sign.sign()
 
 if __name__ == '__main__':
+    init.init()
     MoYuShe()
