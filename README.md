@@ -18,6 +18,7 @@ token = '<你的token>'
 ### 运行
 
 ```bash
+# 运行MoYuShe.py
 python MoYuShe.py
 ```
 
