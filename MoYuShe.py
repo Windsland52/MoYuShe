@@ -8,7 +8,7 @@ def MoYuShe():
 
 if __name__ == '__main__':
     try:
-        with open('config.py', 'r') as f:
+        with open('config.json', 'r') as f:
             pass
     except FileNotFoundError:
         init.init()
