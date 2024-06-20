@@ -1,4 +1,6 @@
 __pycache__/
 
 show.json
-config.py
+config.json
+
+getToken.py

@@ -2,11 +2,14 @@ import init
 import show
 import sign
 
-
 def MoYuShe():
     show.get_show()
     sign.sign()
 
 if __name__ == '__main__':
-    init.init()
+    try:
+        with open('config.py', 'r') as f:
+            pass
+    except FileNotFoundError:
+        init.init()
     MoYuShe()

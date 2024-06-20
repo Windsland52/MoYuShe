@@ -1,6 +1,7 @@
 import requests
-import config
 import json
+
+token = json.load(open('config.json', 'r', encoding='utf-8'))['token']
 
 def sign():
     url = "https://herobox.yingxiong.com:26723/encourage/signin/signin"
@@ -12,7 +13,7 @@ def sign():
         "Content-Type": "application/x-www-form-urlencoded;",
         "source": "h5",
         "User-Agent": "Mozilla/5.0 (Linux; Android 9; HD1910 Build/PQ3A.190705.11150959; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/91.0.4472.114 Safari/537.36CP6.TgzO Hero/3.3.0",
-        "token": f"{config.token}",
+        "token": f"{token}",
         "version": "2.11",
         "Accept": "*/*",
         "Origin": "https://herobox.yingxiong.com:8023",
@@ -33,7 +34,7 @@ def sign():
 
 
     # for item in show_dict['data']['dayAward']:
-    dayAwardId = show_dict['data']['dayAward'][signinTime+1]['id']
+    dayAwardId = show_dict['data']['dayAward'][signinTime]['id']
 
     data = {
         "dayAwardId": f"{dayAwardId}",
@@ -45,9 +46,11 @@ def sign():
     # print(response.text)
     if response.status_code == 200:
         if response.json()['code'] == 200:
-            print(f"签到成功！获得{show_dict['data']['dayAward'][signinTime+1]['awardName']}")
-        elif response.json()['code'] == 10000:
+            print(f"签到成功！获得{show_dict['data']['dayAward'][signinTime]['awardName']}")
+        elif response.json()['code'] == 711:
             print(f"今天已经签到过了！")
+        elif response.json()['code'] == 10000:
+            print(f"签到失败！{response.json()['msg']}")
 
 if __name__ == '__main__':
     sign()

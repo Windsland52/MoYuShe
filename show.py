@@ -1,7 +1,7 @@
 import requests
 import json
-import config
 
+token = json.load(open('config.json', 'r'))['token']
 
 def get_show():
     url = "https://herobox.yingxiong.com:26723/encourage/signin/show"
@@ -13,7 +13,7 @@ def get_show():
         "Content-Type": "application/x-www-form-urlencoded",
         "source": "h5",
         "User-Agent": "Mozilla/5.0 (Linux; Android 9; HD1910 Build/PQ3A.190705.11150959; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/91.0.4472.114 Safari/537.36CP6.TgzO Hero/3.3.0",
-        "token": f"{config.token}",
+        "token": f"{token}",
         "version": "2.11",
         "Accept": "*/*",
         "Origin": "https://herobox.yingxiong.com:8023",

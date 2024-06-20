@@ -1,14 +1,16 @@
 import asyncio
 import websockets
-import config
+import json
 
+token = json.load(open('config.json'))['token']
+devcode = json.load(open('config.json'))['devcode']
 async def send_websocket_request():
     uri = "ws://heroboxim.yingxiong.com:8190/ws-community-im-websocket"
     headers = {
         "appVersion": "3.3.0",
-        "devCode": "26720144bb7c43264bd4dc542a7db9bad",
+        "devCode": f"{devcode}",
         "sourse": "android",
-        "token": f"{config.token}",
+        "token": f"{token}",
         "User-Agent": "okhttp/3.10.0"
     }
 
