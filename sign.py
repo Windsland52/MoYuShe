@@ -31,6 +31,7 @@ def sign():
     with open('show.json', 'r', encoding='utf-8') as f:
         show_dict = json.load(f)
         signinTime = show_dict['data']['signinTime']
+        periodID = show_dict['data']['period']['id']
 
 
     # for item in show_dict['data']['dayAward']:
@@ -39,7 +40,7 @@ def sign():
     data = {
         "dayAwardId": f"{dayAwardId}",
         "signinType": "1",
-        "periodId": "10"
+        "periodId": f"{periodID}"
     }
 
     response = requests.post(url, headers=headers, data=data)
