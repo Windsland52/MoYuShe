@@ -95,7 +95,11 @@ python MoYuShe.py
 
 `show.json`：存储签到信息
 
-`sign.py`：进行签到
+`sign.py`：进行灵魂潮汐签到
+
+`signMoYu.py`：进行摸鱼社签到
+
+`run.bat`：windows下运行脚本
 
 `HttpCanary-3.3.4.apk`：`HttpCanary`安装包(`md5`:`49f7288dfa970bbaa6de07b25ffb5759`)
 
@@ -117,11 +121,12 @@ SP_NAME.xml文件中有`<string name="request_encrypt_list">[&quot;/user/sdkLogi
 
 ### 获取签到信息
 
-详见 `show.py`，数据存在 `show.json` 中。
+详见 `show.py`，数据存储在 `show.json` 中。
 
 ### 进行签到
 
-详见 `sign.py`
+灵魂潮汐签到详见 `sign.py`
+摸鱼社签到详见 `signMoYu.py`
 
 ## ToDo
 
