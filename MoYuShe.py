@@ -1,9 +1,9 @@
 import init
-import show
-import sign
-import signMoYu
 
 def MoYuShe():
+    import show
+    import sign
+    import signMoYu
     show.get_show()
     print("开始灵魂潮汐每日签到：")
     sign.sign()
@@ -16,4 +16,6 @@ if __name__ == '__main__':
             pass
     except FileNotFoundError:
         init.init()
+        print("初始化完成，请在config.json中填写相关信息后再次运行！")
+        exit()
     MoYuShe()
