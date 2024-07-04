@@ -47,7 +47,15 @@ def sign():
     # print(response.text)
     if response.status_code == 200:
         if response.json()['code'] == 200:
-            print(f"签到成功！获得{show_dict['data']['dayAward'][signinTime]['awardName']}")
+            print(f"签到成功！获得{show_dict['data']['DayAward'][signinTime]['awardName']}")
+            if response.json()['data']['signinTimeNow'] in ["5", "10", "15", 5, 10, 15]:
+                signinTimeNow = int(response.json()['data']['signinTimeNow'])
+                continueAwardList = []
+                for item in show_dict['data']['continueAward']:
+                    if item['achieveDays'] == signinTimeNow:
+                        continueAwardList.append(item['awardName'])
+                print(type(response.json()['data']['sendContinueAwardName']))
+                print(f"累计签到{signinTimeNow}天，获得{continueAwardList}")
         elif response.json()['code'] == 711:
             print(f"今天已经签到过了！")
         elif response.json()['code'] == 10000:

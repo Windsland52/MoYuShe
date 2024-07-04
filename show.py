@@ -26,7 +26,7 @@ def get_show():
         "Accept-Language": "zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7"
     }
 
-    # gameId: 649 代表6/1-6/30福利补给站，暂时不知会不会根据月份不同而改变
+    # gameId: 649 代表福利补给站
     data = {
         "gameId": "649"
     }

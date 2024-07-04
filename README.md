@@ -33,7 +33,21 @@ token&quot;:&quot;<token>&quot;,&quot;
 </map>
 ```
 
-`<string name="deviceID">`和`</string>`中间的内容即为`config.json`中需要的`devcode`，经测试随便整个33位十六进制字符串也是没问题的，所以可以用脚本初始化随机生成的。
+`<string name="deviceID">`和`</string>`中间的内容即为`config.json`中需要的`devcode`
+
+`Utils.xml`文件内容如下：
+
+```xml
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<map>
+    <string name="KEY_UDID">devcode</string>
+</map>
+
+```
+
+`<string name="KEY_UDID">`和`</string>`中间的内容也为`config.json`中需要的`devcode`
+
+经测试随便整个33位十六进制字符串也是没问题的，所以可以用脚本初始化随机生成的。
 
 #### 方法2：HttpCanary抓包
 
@@ -95,11 +109,15 @@ python MoYuShe.py
 
 首先通过 `getSmsCode()` 获取短信验证码（这里devcode是设备码，是app根据设备信息生成的唯一标识符，生成逻辑本人没研究出来，用随机生成的33位16进制字符串代替），然后通过 `getToken()` 登录获取token。
 
-卡在生成api签名了，调用adkLogin接口时 data 部分需要 code（验证码）、mobile、gameList（未知）、ts（大概是时间戳，可以调用datatime模块完成）、sign（应该是签名，特征为@+3位数字的循环组合，这部分卡在生成逻辑）。返回`{"code":"101004","msg":"api签名验证失败"}`。
+卡在生成api签名了，调用sdkLogin接口时 data 部分需要 code（验证码）、mobile（手机号）、gameList（649代表灵魂潮汐，888代表鱼塘（这是个什么玩意））、ts（大概是时间戳，可以调用datatime模块完成）、sign（应该是签名，特征为@+3位数字的循环组合，这部分卡在生成逻辑）。返回`{"code":"101004","msg":"api签名验证失败"}`。
+
+SP_NAME.xml文件中有`<string name="request_encrypt_list">[&quot;/user/sdkLogin&quot;]</string>`，表示sdkLogin接口的请求加密
+
+目前观察到有alibaba的签名算法，可能和本项目的签名有关，等待研究。
 
 ### 获取签到信息
 
-详见 `show.py`
+详见 `show.py`，数据存在 `show.json` 中。
 
 ### 进行签到
 
