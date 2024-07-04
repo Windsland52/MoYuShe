@@ -69,7 +69,7 @@ python ./init.py
 // config.json
 {
     "phone" : "<你的手机号>",  // 暂时用不上
-	"token" : "<你的token>",  // 必填
+    "token" : "<你的token>",  // 必填
     "devcode": "<设备id，初始化时应该自动生成了，不用动>"
 }
 ```
