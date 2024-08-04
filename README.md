@@ -6,7 +6,7 @@
 
 ## 快速开始
 
-### 获取token
+### 获取token、refreshToken
 
 暂时通过抓包工具获取，正在开发更方便的获取工具
 
@@ -23,6 +23,8 @@ token&quot;:&quot;<token>&quot;,&quot;
 ```
 
 `token`应该在上面的范围内。
+
+`refreshToken`同理。
 
 `DeviceInfo.xml`文件内容如下：
 
@@ -54,7 +56,7 @@ token&quot;:&quot;<token>&quot;,&quot;
 - 将`HttpCancry`安装到摸鱼社所在的设备，完成配置。（参考网上教程）
 - 开始抓包后，重新登录摸鱼社。
 - 找到`POST https://herobox.yingxiong.com/user/sdkLogin`，点击进入
-- 选择响应->预览，找到`token`值（注意不是`refreshToken`），复制后准备用于配置文件。
+- 选择响应->预览，找到`token`和`refreshToken`，复制后准备用于配置文件。
 
 ### 初始化项目
 
