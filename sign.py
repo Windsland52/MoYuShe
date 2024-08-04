@@ -1,9 +1,12 @@
+from refreshToken import refresh_token
+import show
 import requests
 import json
 
-token = json.load(open('config.json', 'r', encoding='utf-8'))['token']
 
 def sign():
+    token = json.load(open('config.json', 'r', encoding='utf-8'))['token']
+    
     url = "https://herobox.yingxiong.com:26723/encourage/signin/signin"
 
     headers = {
@@ -30,6 +33,10 @@ def sign():
 
     with open('show.json', 'r', encoding='utf-8') as f:
         show_dict = json.load(f)
+        if show_dict['data']['roleInfo'] == {}:
+            print("登录信息已失效，进行token刷新！")
+            refresh_token()
+            return False
         signinTime = show_dict['data']['signinTime']
         periodID = show_dict['data']['period']['id']
 
@@ -66,6 +73,7 @@ def sign():
             print(f"今天已经签到过了！")
         elif response.json()['code'] == 10000:
             print(f"签到失败！{response.json()['msg']}")
+    return True
 
 if __name__ == '__main__':
     sign()

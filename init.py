@@ -13,6 +13,7 @@ def init():
     config_data = {
         "phone": "",
         "token": "",
+        "refreshToken": "",
         "devcode": devcode
     }
 

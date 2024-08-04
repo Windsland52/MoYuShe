@@ -6,7 +6,10 @@ def MoYuShe():
     import signMoYu
     show.get_show()
     print("开始灵魂潮汐每日签到：")
-    sign.sign()
+    res = sign.sign()
+    if not res:
+        show.get_show()
+        sign.sign()
     print("开始摸鱼社每日签到：")
     signMoYu.signMoYu()
 

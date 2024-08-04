@@ -1,9 +1,10 @@
 import requests
 import json
 
-token = json.load(open('config.json', 'r'))['token']
 
 def get_show():
+    token = json.load(open('config.json', 'r'))['token']
+    
     url = "https://herobox.yingxiong.com:26723/encourage/signin/show"
 
     headers = {

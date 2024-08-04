@@ -66,10 +66,11 @@ python ./init.py
 ### 配置文件
 
 ```json
-// config.json
+// config.json 注意json文件在使用中不要保留注释
 {
     "phone" : "<你的手机号>",  // 暂时用不上
     "token" : "<你的token>",  // 必填
+    "refreshToken": "<你的refreshToken>", // 必填，用于刷新token
     "devcode": "<设备id，初始化时应该自动生成了，不用动>"
 }
 ```
@@ -95,6 +96,8 @@ python MoYuShe.py
 
 `show.json`：存储签到信息
 
+`refreshToken.py`：刷新token
+
 `sign.py`：进行灵魂潮汐签到
 
 `signMoYu.py`：进行摸鱼社签到
@@ -111,7 +114,7 @@ python MoYuShe.py
 
 `getToken.py`
 
-首先通过 `getSmsCode()` 获取短信验证码（这里devcode是设备码，是app根据设备信息生成的唯一标识符，生成逻辑本人没研究出来，用随机生成的33位16进制字符串代替），然后通过 `getToken()` 登录获取token。
+首先通过 `getSmsCode()` 获取短信验证码（这里devcode是设备码，是app根据设备信息生成的唯一标识符，生成逻辑本人没研究出来，用随机生成的33位16进制字符串代替），然后通过 `getToken()` 登录获取 token。
 
 卡在生成api签名了，调用sdkLogin接口时 data 部分需要 code（验证码）、mobile（手机号）、gameList（649代表灵魂潮汐，888代表鱼塘（这是个什么玩意））、ts（大概是时间戳，可以调用datatime模块完成）、sign（应该是签名，特征为@+3位数字的循环组合，这部分卡在生成逻辑）。返回`{"code":"101004","msg":"api签名验证失败"}`。
 
@@ -122,6 +125,11 @@ SP_NAME.xml文件中有`<string name="request_encrypt_list">[&quot;/user/sdkLogi
 ### 获取签到信息
 
 详见 `show.py`，数据存储在 `show.json` 中。
+
+### 刷新token
+
+调用 `user/refreshToken` 接口，根据 `refreshToken` 获取新的 token。
+详见 `refreshToken.py`
 
 ### 进行签到
 
