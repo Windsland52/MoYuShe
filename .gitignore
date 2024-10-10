@@ -3,6 +3,3 @@ __pycache__/
 show.json
 config.json
 response.json
-
-getToken.py
-test.py
