@@ -1,10 +1,9 @@
 import requests
 import json
+import logging
 
 
-def get_show():
-    token = json.load(open('config.json', 'r'))['token']
-    
+def get_show(token=None):
     url = "https://herobox.yingxiong.com:26723/encourage/signin/show"
 
     headers = {
@@ -39,8 +38,11 @@ def get_show():
     if response.status_code == 200:
         with open('show.json', 'w', encoding='utf-8') as f:
             json.dump(response_dict, f, ensure_ascii=False, indent=4)
+        logging.info('show.json saved')
     else:
         print(response.status_code, response_dict['msg'])
+        logging.error(f"get show failed, status_code: {response.status_code}, msg: {response_dict['msg']}")
 
 if __name__ == '__main__':
-    get_show()
+    token = json.load(open('config.json', 'r'))['token']
+    get_show(token)

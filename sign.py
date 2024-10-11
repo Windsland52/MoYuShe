@@ -2,11 +2,10 @@ from refreshToken import refresh_token
 import show
 import requests
 import json
+import logging
 
 
-def sign():
-    token = json.load(open('config.json', 'r', encoding='utf-8'))['token']
-    
+def sign(token=None):
     url = "https://herobox.yingxiong.com:26723/encourage/signin/signin"
 
     headers = {
@@ -34,12 +33,11 @@ def sign():
     with open('show.json', 'r', encoding='utf-8') as f:
         show_dict = json.load(f)
         if show_dict['data']['roleInfo'] == {}:
-            print("登录信息已失效，进行token刷新！")
+            logging.error("登录信息已失效，进行token刷新！")
             refresh_token()
             return False
         signinTime = show_dict['data']['signinTime']
         periodID = show_dict['data']['period']['id']
-
 
     # for item in show_dict['data']['dayAward']:
     dayAwardId = show_dict['data']['dayAward'][signinTime]['id']
@@ -59,7 +57,7 @@ def sign():
     #     print("写入response.json失败！")
     if response.status_code == 200:
         if response.json()['code'] == 200:
-            print(f"签到成功！获得{show_dict['data']['dayAward'][signinTime]['awardName']}")
+            logging.info(f"签到成功！获得{show_dict['data']['dayAward'][signinTime]['awardName']}")
             if response.json()['data']['signinTimeNow'] in ["5", "10", "15"]:
                 # print(f"signInTimeNow类型为{type(response.json()['data']['signinTimeNow'])}") // str
                 signinTimeNow = int(response.json()['data']['signinTimeNow'])
@@ -68,12 +66,13 @@ def sign():
                     if item['achieveDays'] == signinTimeNow:
                         continueAwardList.append(item['awardName'])
                 # print(f"sendContinueAward类型为{type(response.json()['data']['sendContinueAward'])}") // bool
-                print(f"累计签到{signinTimeNow}天，获得{continueAwardList}")
+                logging.info(f"累计签到{signinTimeNow}天，获得{continueAwardList}")
         elif response.json()['code'] == 711:
-            print(f"今天已经签到过了！")
+            logging.info(f"今天已经签到过了！")
         elif response.json()['code'] == 10000:
-            print(f"签到失败！{response.json()['msg']}")
+            logging.error(f"签到失败！{response.json()['msg']}")
     return True
 
 if __name__ == '__main__':
-    sign()
+    token = json.load(open('config.json', 'r', encoding='utf-8'))['token']
+    sign(token)

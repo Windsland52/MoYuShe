@@ -1,12 +1,9 @@
 import requests
 import json
+import logging
 
 
-def refresh_token():
-    token = json.load(open('config.json', 'r'))['token']
-    devcode = json.load(open('config.json', 'r'))['devcode']
-    refreshToken = json.load(open('config.json', 'r'))['refreshToken']
-
+def refresh_token(token=None, devcode=None, refreshToken=None):
     url = "https://herobox.yingxiong.com:25362/user/refreshToken"
 
     headers = {
@@ -44,13 +41,18 @@ def refresh_token():
         try:
             config['token'] = response_dict['data']['token']
         except:
-            print("刷新token失败")
+            logging.error("刷新token失败")
             exit()
         with open('config.json', 'w', encoding='utf-8') as f:
             json.dump(config, f, ensure_ascii=False, indent=4)
-            print("刷新token成功")
+            logging.info("刷新token成功")
     else:
         print(response.status_code, response_dict['msg'])
 
 if __name__ == '__main__':
-    refresh_token()
+    with open('config.json', 'r') as f:
+        config = json.load(f)
+    token = config['token']
+    devcode = config['devcode']
+    refreshToken = config['refreshToken']
+    refresh_token(token, devcode, refreshToken)

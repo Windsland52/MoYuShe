@@ -1,20 +1,8 @@
 import requests
 import json
-from datetime import datetime
+import logging
 
-with open("config.json", "r") as f:
-    config = json.load(f)
-
-devcode = config.get("devcode")
-phone = config.get("phone")
-
-def timeStamp2datetime(ts):
-    return datetime.fromtimestamp(ts/1000).strftime('%Y-%m-%d %H:%M:%S')
-
-def nowtime2timeStamp(dt):
-    return int(dt.timestamp() * 1000)
-
-def getSmsCode(phone):
+def getSmsCode(phone, devcode):
     url = "https://micromoyu-api.yingxiong.com/user/getSmsCode"
 
     headers = {
@@ -30,13 +18,13 @@ def getSmsCode(phone):
     response = requests.post(url, headers=headers, data=data)
     
     if json.loads(response.text)["code"] == 200 and json.loads(response.text)["success"] == True:
-        print("短信验证码发送成功")
+        logging.info("短信验证码发送成功")
     else:
-        print("短信验证码发送失败", json.loads(response.text)["msg"])
+        logging.error("短信验证码发送失败", json.loads(response.text)["msg"])
     
     return json.loads(response.text)
 
-def getToken(phone, smsCode):
+def getToken(phone, smsCode, devcode):
     url = "https://micromoyu-api.yingxiong.com/user/sdkLoginForMC"
 
     headers = {
@@ -55,19 +43,20 @@ def getToken(phone, smsCode):
     response = requests.post(url, headers=headers, data=data)
     
     if json.loads(response.text)["code"] == 200 and json.loads(response.text)["success"] == True:
-        print("登录成功")
-        print(response.text)
-        print("token:", json.loads(response.text)["data"]["token"])
+        logging.info("登录成功")
+        logging.info("token:", json.loads(response.text)["data"]["token"])
+        return json.loads(response.text)["data"]["token"], json.loads(response.text)["data"]["refreshToken"]
     else:
-        print(response.text)
-        print("登录失败", json.loads(response.text)["msg"])
-    
-    return json.loads(response.text)
+        logging.error("登录失败", json.loads(response.text)["msg"])
+        return False
 
 if __name__ == '__main__':
-    print("请输入手机号:")
-    phone = input()
-    getSmsCode(phone)
+    with open("config.json", "r") as f:
+        config = json.load(f)
+    devcode = config.get("devcode")
+    phone = config.get("phone")
+    getSmsCode(phone, devcode)
+    print("正在发送短信验证码...")
     print("请输入短信验证码:")
     smsCode = input()
-    getToken(phone, smsCode)
+    getToken(phone, smsCode, devcode)

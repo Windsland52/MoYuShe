@@ -1,10 +1,7 @@
 import requests
 import json
 
-token = json.load(open('config.json'))['token']
-devcode = json.load(open('config.json'))['devcode']
-
-def signMoYu():
+def signMoYu(devcode=None, token=None):
     url = "https://herobox.yingxiong.com:25362/user/signIn"
 
     headers = {
@@ -37,4 +34,6 @@ def signMoYu():
         print(f"签到失败！{response.json()['msg']}")
 
 if __name__ == '__main__':
-    signMoYu()
+    token = json.load(open('config.json'))['token']
+    devcode = json.load(open('config.json'))['devcode']
+    signMoYu(token, devcode)
