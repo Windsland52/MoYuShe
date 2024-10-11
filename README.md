@@ -15,6 +15,10 @@ python MoYuShe.py
 
 Windows下可直接用打包好的exe文件运行。
 
+### 演示
+
+[免费白嫖！解放双手！灵魂潮汐&摸鱼社自动签到脚本](https://www.bilibili.com/video/BV1di2SYsEkg/)
+
 ### 参考部署脚本
 
 Windows中，将下面代码保存到当前目录下的 `MoYuShe.bat` 文件中，双击运行即可。
