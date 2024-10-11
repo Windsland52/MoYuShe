@@ -85,4 +85,7 @@ if __name__ == '__main__':
     logging.info("作者：Windsland")
     logging.info("Github：https://github.com/Windsland52/MoYuShe")
     logging.info("版权声明：本项目遵循CC BY-NC-SA 4.0协议，您可以自由地分享、修改、分发本项目，但请注明出处。祝您使用愉快！")
-    MoYuShe()
+    try:
+        MoYuShe()
+    except Exception as e:
+        logging.error(e)
