@@ -1,5 +1,12 @@
 __pycache__/
+log/
+logs/
+build/
+dist/
 
 show.json
 config.json
-response.json
+
+*.log
+*.pyc
+*.spec
