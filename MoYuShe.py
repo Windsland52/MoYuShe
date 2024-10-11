@@ -7,7 +7,25 @@ from sign import sign
 from refreshToken import refresh_token
 from signMoYu import signMoYu
 
-logging.basicConfig(level=logging.INFO)
+# 配置 basicConfig，输出到文件
+logging.basicConfig(
+    level=logging.INFO,
+    filename='MoYuShe.log',
+    filemode='a',
+    format='[%(asctime)s] [%(levelname)s] %(message)s'
+)
+
+# 获取根日志器
+logger = logging.getLogger()
+
+# 添加控制台处理器
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)
+console_formatter = logging.Formatter('[%(asctime)s] [%(levelname)s] %(message)s')
+console_handler.setFormatter(console_formatter)
+
+# 添加控制台处理器到日志器
+logger.addHandler(console_handler)
 
 def login():
     logging.info("开始登录")
@@ -33,29 +51,38 @@ def MoYuShe():
     try:
         with open('config.json', 'r') as f:
             config = json.load(f)
-            devcode = config['devcode']
             phone = config['phone']
-            token = config['token']
             refreshToken = config['refreshToken']
-            if phone == "" or token == "" or refreshToken == "":
-                logging.info("配置文件不完整，开始登录")
-                login()
-            logging.info("读取配置文件成功")
+        if phone == "" or refreshToken == "":
+            logging.info("配置文件不完整，开始登录")
+            login()
     except FileNotFoundError:
         init(random_hex_string())
         logging.info("未发现配置文件，已自动初始化")
-
-        logging.info("开始登录")
         login()
 
+    with open('config.json', 'r') as f:
+        config = json.load(f)
+        token = config['token']
+        devcode = config['devcode']
+        refreshToken = config['refreshToken']
+    logging.info("读取配置文件成功")
     get_show(token)
     logging.info("开始灵魂潮汐每日签到")
-    res = sign(token)
+    res = sign(token, devcode, refreshToken)
     if not res:
+        with open('config.json', 'r') as f:
+            config = json.load(f)
+            token = config['token']
         get_show(token)
-        sign(token)
+        sign(token, devcode, refreshToken)
     logging.info("开始摸鱼社每日签到")
     signMoYu(devcode, token)
 
 if __name__ == '__main__':
+    logging.info("程序开始运行")
+    logging.info("Version v1.0.0")
+    logging.info("作者：Windsland")
+    logging.info("Github：https://github.com/Windsland52/MoYuShe")
+    logging.info("版权声明：本项目遵循CC BY-NC-SA 4.0协议，您可以自由地分享、修改、分发本项目，但请注明出处。祝您使用愉快！")
     MoYuShe()
