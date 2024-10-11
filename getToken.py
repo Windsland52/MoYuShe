@@ -48,7 +48,7 @@ def getToken(phone, smsCode, devcode):
         return json.loads(response.text)["data"]["token"], json.loads(response.text)["data"]["refreshToken"]
     else:
         logging.error("登录失败", json.loads(response.text)["msg"])
-        return False
+        return None, None
 
 if __name__ == '__main__':
     with open("config.json", "r") as f:
