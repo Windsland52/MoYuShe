@@ -5,7 +5,7 @@ import json
 import logging
 
 
-def sign(token=None):
+def sign(token=None,devcode=None, refreshToken=None):
     url = "https://herobox.yingxiong.com:26723/encourage/signin/signin"
 
     headers = {
@@ -33,8 +33,8 @@ def sign(token=None):
     with open('show.json', 'r', encoding='utf-8') as f:
         show_dict = json.load(f)
         if show_dict['data']['roleInfo'] == {}:
-            logging.error("登录信息已失效，进行token刷新！")
-            refresh_token()
+            logging.warning("登录信息已失效，进行token刷新！")
+            refresh_token(token, devcode, refreshToken)
             return False
         signinTime = show_dict['data']['signinTime']
         periodID = show_dict['data']['period']['id']
@@ -49,12 +49,7 @@ def sign(token=None):
     }
 
     response = requests.post(url, headers=headers, data=data)
-    # print(response.text)
-    # try:
-    #     with open('response.json', 'w', encoding='utf-8') as f:
-    #             json.dump(response.json(), f, ensure_ascii=False, indent=4)
-    # except:
-    #     print("写入response.json失败！")
+    
     if response.status_code == 200:
         if response.json()['code'] == 200:
             logging.info(f"签到成功！获得{show_dict['data']['dayAward'][signinTime]['awardName']}")
@@ -68,11 +63,13 @@ def sign(token=None):
                 # print(f"sendContinueAward类型为{type(response.json()['data']['sendContinueAward'])}") // bool
                 logging.info(f"累计签到{signinTimeNow}天，获得{continueAwardList}")
         elif response.json()['code'] == 711:
-            logging.info(f"今天已经签到过了！")
+            logging.info(f"签到失败！今天已经签到过了！")
         elif response.json()['code'] == 10000:
             logging.error(f"签到失败！{response.json()['msg']}")
     return True
 
 if __name__ == '__main__':
     token = json.load(open('config.json', 'r', encoding='utf-8'))['token']
-    sign(token)
+    devcode = json.load(open('config.json', 'r', encoding='utf-8'))['devcode']
+    refreshToken = json.load(open('config.json', 'r', encoding='utf-8'))['refreshToken']
+    sign(token, devcode, refreshToken)

@@ -41,7 +41,7 @@ def refresh_token(token=None, devcode=None, refreshToken=None):
         try:
             config['token'] = response_dict['data']['token']
         except:
-            logging.error("刷新token失败")
+            logging.error(f"刷新token失败，{response_dict['msg']}")
             exit()
         with open('config.json', 'w', encoding='utf-8') as f:
             json.dump(config, f, ensure_ascii=False, indent=4)

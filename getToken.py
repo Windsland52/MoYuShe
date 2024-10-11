@@ -44,11 +44,10 @@ def getToken(phone, smsCode, devcode):
     
     if json.loads(response.text)["code"] == 200 and json.loads(response.text)["success"] == True:
         logging.info("登录成功")
-        logging.info("token:", json.loads(response.text)["data"]["token"])
         return json.loads(response.text)["data"]["token"], json.loads(response.text)["data"]["refreshToken"]
     else:
         logging.error("登录失败", json.loads(response.text)["msg"])
-        return None, None
+        return "", ""
 
 if __name__ == '__main__':
     with open("config.json", "r") as f:

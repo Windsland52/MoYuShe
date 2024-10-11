@@ -1,5 +1,6 @@
 import requests
 import json
+import logging
 
 def signMoYu(devcode=None, token=None):
     url = "https://herobox.yingxiong.com:25362/user/signIn"
@@ -29,9 +30,9 @@ def signMoYu(devcode=None, token=None):
     response = requests.post(url, headers=headers, data=data)
 
     if response.json()['code'] == 200:
-        print("签到成功！")
+        logging.info(f"签到成功！{response.json()['msg']}")
     else:
-        print(f"签到失败！{response.json()['msg']}")
+        logging.info(f"签到失败！{response.json()['msg']}")
 
 if __name__ == '__main__':
     token = json.load(open('config.json'))['token']
