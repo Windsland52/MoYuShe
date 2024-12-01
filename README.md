@@ -115,3 +115,7 @@ read -p "Press enter to continue..."
 # Join us
 
 不单设交流群，可加入 MST开发/用户交流群 QQ 群：[212220209](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=zybZ5ST3IHx8_l8pajwFd9OxpNQzXjdy&authKey=C5qMnDOvB4mVKNNC%2By45eKc%2BLnETkm4XFQmmdrmWzu9qemKW4lurHbf4h4h8%2F0bA&noverify=0&group_code=212220209)
+
+## 最新通知
+
+由于 2024/11/1 社区官方通知，该签到于 2024/12/1 停止，项目归档。
